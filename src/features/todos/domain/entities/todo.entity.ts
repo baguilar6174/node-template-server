@@ -1,5 +1,7 @@
 // src\features\todos\domain\entities\todo.entity.ts
 
+import { ValidationError } from '../../../../core/errors/validation.error';
+
 export class TodoEntity {
 	constructor(
 		public id: number,
@@ -9,8 +11,14 @@ export class TodoEntity {
 
 	public static fromJson(obj: Record<string, unknown>): TodoEntity {
 		const { id, text, isCompleted = false } = obj;
-		if (!id) throw new Error('id is required');
-		if (!text) throw new Error('text is required');
+		if (!text) {
+			throw new ValidationError([
+				{
+					constraint: 'id is required',
+					fields: ['id']
+				}
+			]);
+		}
 		return new TodoEntity(id as number, text as string, isCompleted as boolean);
 	}
 }

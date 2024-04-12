@@ -1,11 +1,12 @@
 // src\server.ts
 
-import express, { type Router, type Request, type Response } from 'express';
+import express, { type Router, type Request, type Response, type NextFunction } from 'express';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 
 import { HttpCode, ONE_HUNDRED, ONE_THOUSAND, SIXTY } from './core/constants';
 import { ErrorMiddleware } from './features/shared/presentation/middlewares/error.middleware';
+import { AppError } from './core/errors/custom.error';
 
 interface ServerOptions {
 	port: number;
@@ -45,6 +46,11 @@ export class Server {
 			return res.status(HttpCode.OK).send({
 				message: `Welcome to Initial API! \n Endpoints available at http://localhost:${this.port}/`
 			});
+		});
+
+		//* Handle not found routes in /api/v1/* (only if 'Public content folder' is not available)
+		this.routes.all('*', (req: Request, _: Response, next: NextFunction): void => {
+			next(AppError.notFound(`Cant find ${req.originalUrl} on this server!`));
 		});
 
 		// Handle errors middleware

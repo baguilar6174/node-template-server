@@ -1,11 +1,7 @@
 // src\core\errors\validation.error.ts
 
 import { ZERO, type HttpCode } from '../constants';
-
-export interface ValidationType {
-	fields: string[];
-	constraint: string;
-}
+import { type ValidationType } from '../types';
 
 export class ValidationError extends Error {
 	public readonly statusCode: HttpCode;

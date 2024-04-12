@@ -1,9 +1,13 @@
 // src\features\todos\domain\repositories\respository.ts
 
+import { type PaginationDto, type PaginationResponseEntity } from '../../../shared/domain';
+import { type GetTodoByIdDto, type UpdateTodoDto, type CreateTodoDto } from '../dtos';
 import { type TodoEntity } from '../entities/todo.entity';
 
 export abstract class TodoRepository {
-	abstract getAll(): Promise<TodoEntity[]>;
-	// rest of operations
-	// ...
+	abstract create(createDto: CreateTodoDto): Promise<TodoEntity>;
+	abstract getAll(pagination: PaginationDto): Promise<PaginationResponseEntity<TodoEntity[]>>;
+	abstract getById(getByIdDto: GetTodoByIdDto): Promise<TodoEntity>;
+	abstract update(updateDto: UpdateTodoDto): Promise<TodoEntity>;
+	abstract delete(getByIdDto: GetTodoByIdDto): Promise<TodoEntity>;
 }
