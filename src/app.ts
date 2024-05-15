@@ -10,8 +10,9 @@ import { Server } from './server';
 
 function main(): void {
 	const server = new Server({
-		routes: AppRoutes.routes,
-		port: envs.PORT
+		port: envs.PORT,
+		apiPrefix: envs.API_PREFIX,
+		routes: AppRoutes.routes
 	});
 	void server.start();
 }

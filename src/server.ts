@@ -7,21 +7,25 @@ import rateLimit from 'express-rate-limit';
 import { HttpCode, ONE_HUNDRED, ONE_THOUSAND, SIXTY } from './core/constants';
 import { ErrorMiddleware } from './features/shared/presentation/middlewares/error.middleware';
 import { AppError } from './core/errors/custom.error';
+import { CustomMiddlewares } from './features/shared/presentation/middlewares/custom.middleware';
 
 interface ServerOptions {
 	port: number;
 	routes: Router;
+	apiPrefix: string;
 }
 
 export class Server {
 	private readonly app = express();
 	private readonly port: number;
 	private readonly routes: Router;
+	private readonly apiPrefix: string;
 
 	constructor(options: ServerOptions) {
-		const { port, routes } = options;
+		const { port, routes, apiPrefix } = options;
 		this.port = port;
 		this.routes = routes;
+		this.apiPrefix = apiPrefix;
 	}
 
 	async start(): Promise<void> {
@@ -38,8 +42,27 @@ export class Server {
 			})
 		);
 
+		// Shared Middlewares
+		this.app.use(CustomMiddlewares.writeInConsole);
+
+		// CORS
+		this.app.use((req, res, next) => {
+			// Add your origins
+			const allowedOrigins = ['http://localhost:3000'];
+			const origin = req.headers.origin;
+			// TODO: Fix this
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			if (allowedOrigins.includes(origin!)) {
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				res.setHeader('Access-Control-Allow-Origin', origin!);
+			}
+			res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+			res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+			next();
+		});
+
 		//* Routes
-		this.app.use(this.routes);
+		this.app.use(this.apiPrefix, this.routes);
 
 		// Test rest api
 		this.app.get('/', (_req: Request, res: Response) => {

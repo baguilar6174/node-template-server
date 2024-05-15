@@ -1,6 +1,9 @@
+import { ZERO } from '../../../../core/constants';
+import { ValidationError } from '../../../../core/errors/validation.error';
 import { type ValidationType } from '../../../../core/types';
+import { type CoreDto } from '../../../shared/domain';
 
-export class UpdateTodoDto {
+export class UpdateTodoDto implements CoreDto<UpdateTodoDto> {
 	private constructor(
 		public readonly id: number,
 		public readonly text?: string,
@@ -14,7 +17,7 @@ export class UpdateTodoDto {
 		return obj;
 	}
 
-	public static validate(dto: UpdateTodoDto): ValidationType[] {
+	public validate(dto: UpdateTodoDto): void {
 		const errors: ValidationType[] = [];
 
 		const { id, completedAt } = dto;
@@ -30,7 +33,7 @@ export class UpdateTodoDto {
 			}
 		}
 
-		return errors;
+		if (errors.length > ZERO) throw new ValidationError(errors);
 	}
 
 	public static create(props: Record<string, unknown>): UpdateTodoDto {

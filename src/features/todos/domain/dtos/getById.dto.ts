@@ -1,9 +1,14 @@
+import { ZERO } from '../../../../core/constants';
+import { ValidationError } from '../../../../core/errors/validation.error';
 import { type ValidationType } from '../../../../core/types';
+import { type CoreDto } from '../../../shared/domain';
 
-export class GetTodoByIdDto {
-	constructor(public readonly id: number) {}
+export class GetTodoByIdDto implements CoreDto<GetTodoByIdDto> {
+	constructor(public readonly id: number) {
+		this.validate(this);
+	}
 
-	public static validate(dto: GetTodoByIdDto): ValidationType[] {
+	public validate(dto: GetTodoByIdDto): void {
 		const errors: ValidationType[] = [];
 
 		const { id } = dto;
@@ -12,6 +17,6 @@ export class GetTodoByIdDto {
 			errors.push({ fields: ['id'], constraint: 'Id is not a valid number' });
 		}
 
-		return errors;
+		if (errors.length > ZERO) throw new ValidationError(errors);
 	}
 }

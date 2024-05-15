@@ -1,13 +1,17 @@
 import { ZERO } from '../../../../core/constants';
+import { ValidationError } from '../../../../core/errors/validation.error';
 import { type ValidationType } from '../../../../core/types';
+import { type CoreDto } from './core.dto';
 
-export class PaginationDto {
+export class PaginationDto implements CoreDto<PaginationDto> {
 	constructor(
 		public readonly page: number,
 		public readonly limit: number
-	) {}
+	) {
+		this.validate(this);
+	}
 
-	public static validate(dto: PaginationDto): ValidationType[] {
+	public validate(dto: PaginationDto): void {
 		const errors: ValidationType[] = [];
 
 		if (isNaN(dto.page) || isNaN(dto.limit)) {
@@ -22,6 +26,6 @@ export class PaginationDto {
 			errors.push({ fields: ['limit'], constraint: 'Limit must be greater than zero' });
 		}
 
-		return errors;
+		if (errors.length > ZERO) throw new ValidationError(errors);
 	}
 }
