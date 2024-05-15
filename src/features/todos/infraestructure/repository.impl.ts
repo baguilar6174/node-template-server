@@ -1,7 +1,7 @@
 // src\features\todos\infraestructure\repository.impl.ts
 
 import { type PaginationDto, type PaginationResponseEntity } from '../../shared/domain';
-import { type TodoDatasource } from '../domain/datasources/datasource';
+import { type TodoDatasource } from '../domain/datasources/local.datasource';
 import { type GetTodoByIdDto, type UpdateTodoDto, type CreateTodoDto } from '../domain/dtos';
 import { type TodoEntity } from '../domain/entities/todo.entity';
 import { type TodoRepository } from '../domain/repositories/respository';

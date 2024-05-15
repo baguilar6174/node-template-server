@@ -3,7 +3,7 @@
 import { ONE, ZERO } from '../../../core/constants';
 import { AppError } from '../../../core/errors/custom.error';
 import { type PaginationDto, type PaginationResponseEntity } from '../../shared/domain';
-import { type TodoDatasource } from '../domain/datasources/datasource';
+import { type TodoDatasource } from '../domain/datasources/local.datasource';
 import { type CreateTodoDto, type GetTodoByIdDto, type UpdateTodoDto } from '../domain/dtos';
 import { TodoEntity } from '../domain/entities/todo.entity';
 
