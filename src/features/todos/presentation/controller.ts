@@ -1,14 +1,22 @@
 // src\features\todos\presentation\controller.ts
 
 import { type NextFunction, type Request, type Response } from 'express';
-import { type TodoRepository } from '../domain/repositories/respository';
-import { type TodoEntity } from '../domain/entities/todo.entity';
-import { GetTodos } from '../domain/usecases/getAll.usecase';
-import { type SuccessResponse } from '../../../core/types';
-import { PaginationDto, type PaginationResponseEntity } from '../../shared/domain';
-import { HttpCode, ONE, TEN } from '../../../core/constants';
-import { CreateTodoDto, GetTodoByIdDto, UpdateTodoDto } from '../domain/dtos';
-import { CreateTodo, DeleteTodo, GetTodoById, UpdateTodo } from '../domain/usecases';
+
+import { type SuccessResponse, HttpCode, ONE, TEN } from '../../../core';
+import { PaginationDto, type PaginationResponseEntity } from '../../shared';
+
+import {
+	CreateTodo,
+	DeleteTodo,
+	GetTodoById,
+	UpdateTodo,
+	CreateTodoDto,
+	GetTodoByIdDto,
+	UpdateTodoDto,
+	GetTodos,
+	type TodoEntity,
+	type TodoRepository
+} from '../domain';
 
 interface Params {
 	id: string;

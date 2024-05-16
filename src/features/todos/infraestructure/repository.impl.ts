@@ -1,10 +1,15 @@
 // src\features\todos\infraestructure\repository.impl.ts
 
-import { type PaginationDto, type PaginationResponseEntity } from '../../shared/domain';
-import { type TodoDatasource } from '../domain/datasources/local.datasource';
-import { type GetTodoByIdDto, type UpdateTodoDto, type CreateTodoDto } from '../domain/dtos';
-import { type TodoEntity } from '../domain/entities/todo.entity';
-import { type TodoRepository } from '../domain/repositories/respository';
+import { type PaginationDto, type PaginationResponseEntity } from '../../shared';
+
+import {
+	type TodoEntity,
+	type TodoDatasource,
+	type GetTodoByIdDto,
+	type UpdateTodoDto,
+	type CreateTodoDto,
+	type TodoRepository
+} from '../domain';
 
 export class TodoRepositoryImpl implements TodoRepository {
 	constructor(private readonly datasource: TodoDatasource) {}

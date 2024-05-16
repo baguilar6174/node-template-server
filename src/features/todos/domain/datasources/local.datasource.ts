@@ -1,8 +1,8 @@
 // src\features\todos\domain\datasources\datasource.ts
 
-import { type PaginationDto, type PaginationResponseEntity } from '../../../shared/domain';
+import { type PaginationDto, type PaginationResponseEntity } from '../../../shared';
 import { type UpdateTodoDto, type CreateTodoDto, type GetTodoByIdDto } from '../dtos';
-import { type TodoEntity } from '../entities/todo.entity';
+import { type TodoEntity } from '../entities';
 
 export abstract class TodoDatasource {
 	abstract create(createDto: CreateTodoDto): Promise<TodoEntity>;

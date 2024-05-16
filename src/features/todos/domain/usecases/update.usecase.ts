@@ -1,5 +1,5 @@
 import { type UpdateTodoDto } from '../dtos';
-import { type TodoEntity } from '../entities/todo.entity';
+import { type TodoEntity } from '../entities';
 import { type TodoRepository } from '../repositories/respository';
 
 export interface UpdateTodoUseCase {

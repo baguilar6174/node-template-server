@@ -1,7 +1,5 @@
-import { ZERO } from '../../../../core/constants';
-import { ValidationError } from '../../../../core/errors/validation.error';
-import { type ValidationType } from '../../../../core/types';
-import { type CoreDto } from '../../../shared/domain';
+import { type ValidationType, ValidationError, ZERO } from '../../../../core';
+import { type CoreDto } from '../../../shared';
 
 export class CreateTodoDto implements CoreDto<CreateTodoDto> {
 	constructor(public readonly text: string) {

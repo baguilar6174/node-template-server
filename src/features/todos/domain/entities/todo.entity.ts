@@ -1,6 +1,6 @@
 // src\features\todos\domain\entities\todo.entity.ts
 
-import { ValidationError } from '../../../../core/errors/validation.error';
+import { ValidationError } from '../../../../core';
 
 export class TodoEntity {
 	constructor(

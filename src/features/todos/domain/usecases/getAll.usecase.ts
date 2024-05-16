@@ -1,5 +1,5 @@
-import { type PaginationDto, type PaginationResponseEntity } from '../../../shared/domain';
-import { type TodoEntity } from '../entities/todo.entity';
+import { type PaginationDto, type PaginationResponseEntity } from '../../../shared';
+import { type TodoEntity } from '../entities';
 import { type TodoRepository } from '../repositories/respository';
 
 export interface GetTodosUseCase {

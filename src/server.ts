@@ -4,10 +4,8 @@ import express, { type Router, type Request, type Response, type NextFunction } 
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 
-import { HttpCode, ONE_HUNDRED, ONE_THOUSAND, SIXTY } from './core/constants';
-import { ErrorMiddleware } from './features/shared/presentation/middlewares/error.middleware';
-import { AppError } from './core/errors/custom.error';
-import { CustomMiddlewares } from './features/shared/presentation/middlewares/custom.middleware';
+import { HttpCode, ONE_HUNDRED, ONE_THOUSAND, SIXTY, AppError } from './core';
+import { CustomMiddlewares, ErrorMiddleware } from './features/shared';
 
 interface ServerOptions {
 	port: number;

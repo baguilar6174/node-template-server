@@ -1,6 +1,4 @@
-import { ZERO } from '../../../../core/constants';
-import { ValidationError } from '../../../../core/errors/validation.error';
-import { type ValidationType } from '../../../../core/types';
+import { ValidationError, ZERO, type ValidationType } from '../../../../core';
 import { type CoreDto } from './core.dto';
 
 export class PaginationDto implements CoreDto<PaginationDto> {

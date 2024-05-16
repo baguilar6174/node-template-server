@@ -1,8 +1,8 @@
 // src\features\todos\presentation\routes.ts
 
 import { Router } from 'express';
-import { TodoDatasourceImpl } from '../infraestructure/local.datasource.impl';
-import { TodoRepositoryImpl } from '../infraestructure/repository.impl';
+
+import { TodoDatasourceImpl, TodoRepositoryImpl } from '../infraestructure';
 import { TodoController } from './controller';
 
 export class TodoRoutes {

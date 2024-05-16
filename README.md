@@ -42,6 +42,10 @@ If your want to create build production, run `yarn build`
 - ESLint & Prettier
 - Environment Variables
 
+### Improves
+
+- Add alias path
+
 ## Project Structure
 
 ```bash
