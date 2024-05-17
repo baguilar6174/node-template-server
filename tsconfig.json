@@ -1,18 +1,19 @@
 {
-  "exclude": ["node_modules", "dist", "src/**/*.test.ts"],
-  "include": ["src/**/*"],
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "rootDir": "./src",
-    "moduleResolution": "NodeNext",
-    "typeRoots": ["./node_modules/@types"],
-    "sourceMap": true,
-    "outDir": "dist/",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "skipLibCheck": true
-  }
+	"exclude": ["node_modules", "dist", "src/**/*.test.ts"],
+	"include": ["src/**/*"],
+	"compilerOptions": {
+		"types": ["node", "jest", "express"],
+		"target": "ESNext",
+		"module": "NodeNext",
+		"rootDir": "./src",
+		"moduleResolution": "NodeNext",
+		"typeRoots": ["./node_modules/@types"],
+		"sourceMap": true,
+		"outDir": "dist/",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"strictNullChecks": true,
+		"skipLibCheck": true
+	}
 }
