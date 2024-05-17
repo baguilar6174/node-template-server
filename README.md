@@ -45,6 +45,9 @@ If your want to create build production, run `yarn build`
 ### Improves
 
 - Add alias path
+- Testing
+- Logger
+- Auth
 
 ## Project Structure
 
