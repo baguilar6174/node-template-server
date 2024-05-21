@@ -26,4 +26,9 @@ export class PaginationDto implements CoreDto<PaginationDto> {
 
 		if (errors.length > ZERO) throw new ValidationError(errors);
 	}
+
+	public static create(props: Record<string, unknown>): PaginationDto {
+		const { page, limit } = props;
+		return new PaginationDto(page as number, limit as number);
+	}
 }

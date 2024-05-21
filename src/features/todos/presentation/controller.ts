@@ -43,6 +43,7 @@ export class TodoController {
 	): void => {
 		const { page = ONE, limit = TEN } = req.query;
 		const paginationDto = new PaginationDto(+page, +limit);
+		// const paginationDto = PaginationDto.create({ ...req.query });
 		new GetTodos(this.repository)
 			.execute(paginationDto)
 			.then((result) => res.json({ data: result }))

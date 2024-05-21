@@ -5,37 +5,29 @@ export class UpdateTodoDto implements CoreDto<UpdateTodoDto> {
 	private constructor(
 		public readonly id: number,
 		public readonly text?: string,
-		public readonly completedAt?: Date
-	) {}
-
-	get values(): Record<string, unknown> {
-		const obj: Record<string, unknown> = {};
-		if (this.text) obj.text = this.text;
-		if (this.completedAt) obj.completedAt = this.completedAt;
-		return obj;
+		public readonly isCompleted?: boolean
+	) {
+		this.validate(this);
 	}
 
 	public validate(dto: UpdateTodoDto): void {
 		const errors: ValidationType[] = [];
 
-		const { id, completedAt } = dto;
+		const { id, isCompleted } = dto;
 
 		if (!id || isNaN(Number(id))) {
 			errors.push({ fields: ['id'], constraint: 'Id is not a valid number' });
 		}
 
-		if (completedAt) {
-			const newDate = new Date(completedAt);
-			if (newDate.toString() === 'Invalid Date') {
-				errors.push({ fields: ['completedAt'], constraint: 'CompletedAt must be a valid date' });
-			}
+		if (typeof isCompleted !== 'boolean' && isCompleted !== 'true' && isCompleted !== 'false') {
+			errors.push({ fields: ['isCompleted'], constraint: 'isCompleted must be a valid value (true or false)' });
 		}
 
 		if (errors.length > ZERO) throw new ValidationError(errors);
 	}
 
 	public static create(props: Record<string, unknown>): UpdateTodoDto {
-		const { id, text, completedAt } = props;
-		return new UpdateTodoDto(id as number, text as string, new Date(completedAt as string));
+		const { id, text, isCompleted } = props;
+		return new UpdateTodoDto(id as number, text as string, isCompleted as boolean);
 	}
 }
