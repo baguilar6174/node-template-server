@@ -19,7 +19,12 @@ export class UpdateTodoDto implements CoreDto<UpdateTodoDto> {
 			errors.push({ fields: ['id'], constraint: 'Id is not a valid number' });
 		}
 
-		if (typeof isCompleted !== 'boolean' && isCompleted !== 'true' && isCompleted !== 'false') {
+		if (
+			isCompleted !== undefined &&
+			typeof isCompleted !== 'boolean' &&
+			isCompleted !== 'true' &&
+			isCompleted !== 'false'
+		) {
 			errors.push({ fields: ['isCompleted'], constraint: 'isCompleted must be a valid value (true or false)' });
 		}
 

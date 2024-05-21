@@ -35,7 +35,7 @@ export class TodoDatasourceImpl implements TodoDatasource {
 		const prevPage = page > ONE ? page - ONE : null;
 
 		return {
-			results: todos.map((todo) => TodoEntity.fromJson(todo)),
+			results: todos.slice((page - ONE) * limit, page * limit).map((todo) => TodoEntity.fromJson(todo)),
 			currentPage: page,
 			nextPage,
 			prevPage,
@@ -51,21 +51,27 @@ export class TodoDatasourceImpl implements TodoDatasource {
 	}
 
 	public async create(createDto: CreateTodoDto): Promise<TodoEntity> {
-		const createdTodo = { id: TODOS_MOCK.length + ONE, ...createDto };
-		// TODO: complete implementation
+		const createdTodo = { id: TODOS_MOCK.length + ONE, ...createDto, isCompleted: false };
+		TODOS_MOCK.push(createdTodo);
 		return TodoEntity.fromJson(createdTodo);
 	}
 
 	public async update(updateDto: UpdateTodoDto): Promise<TodoEntity> {
-		await this.getById(updateDto);
-		// TODO: complete implementation
-		return TodoEntity.fromJson({ ...updateDto });
+		const { id } = await this.getById(updateDto);
+		const index = TODOS_MOCK.findIndex((todo) => todo.id === id);
+
+		TODOS_MOCK[index] = {
+			...TODOS_MOCK[index],
+			...Object.fromEntries(Object.entries(updateDto).filter(([_, v]) => v !== undefined))
+		};
+
+		return TodoEntity.fromJson(TODOS_MOCK[index]);
 	}
 
 	public async delete(getByIdDto: GetTodoByIdDto): Promise<TodoEntity> {
-		await this.getById(getByIdDto);
-		// TODO: complete implementation
-		const deletedTodo = TODOS_MOCK[ZERO];
+		const { id } = await this.getById(getByIdDto);
+		const index = TODOS_MOCK.findIndex((todo) => todo.id === id);
+		const deletedTodo = TODOS_MOCK.splice(index, ONE)[ZERO];
 		return TodoEntity.fromJson(deletedTodo);
 	}
 }
