@@ -6,7 +6,7 @@ export class TodoEntity {
 	constructor(
 		public id: number,
 		public text: string,
-		public isCompleted: boolean
+		public isCompleted: boolean = false
 	) {}
 
 	public static fromJson(obj: Record<string, unknown>): TodoEntity {
