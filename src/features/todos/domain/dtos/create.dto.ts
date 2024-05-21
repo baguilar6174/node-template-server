@@ -9,7 +9,7 @@ export class CreateTodoDto implements CoreDto<CreateTodoDto> {
 	public validate(dto: CreateTodoDto): void {
 		const errors: ValidationType[] = [];
 
-		if (!dto.text) {
+		if (!dto.text || dto.text.length === ZERO) {
 			errors.push({ fields: ['text'], constraint: 'Text is required' });
 		}
 
