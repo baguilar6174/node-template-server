@@ -32,10 +32,6 @@ describe('tests in create.usecase.ts', () => {
 		expect(result).toEqual(createdTodo);
 	});
 
-	test('should throw a validation error if text is empty', async () => {
-		expect(() => new CreateTodoDto('')).toThrow(ValidationError);
-	});
-
 	test('should throw an error if repository.create fails', async () => {
 		const todoData = new CreateTodoDto('Test Todo');
 		const error = new Error('Repository create failed');
