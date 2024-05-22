@@ -20,23 +20,23 @@ describe('tests in update.usecase.ts', () => {
 	});
 
 	test('should update a todo item successfully', async () => {
-		const todoData = new UpdateTodoDto(1, 'Test Todo updated');
+		const updateData = new UpdateTodoDto(1, 'Test Todo updated');
 		const updatedTodo: TodoEntity = { id: 1, text: 'Test Todo updated', isCompleted: false };
 
 		repository.update.mockResolvedValue(updatedTodo);
 
-		const result = await updateTodoUseCase.execute(todoData);
+		const result = await updateTodoUseCase.execute(updateData);
 
-		expect(repository.update).toHaveBeenCalledWith(todoData);
+		expect(repository.update).toHaveBeenCalledWith(updateData);
 		expect(result).toEqual(updatedTodo);
 	});
 
 	test('should throw an error if repository.update fails', async () => {
-		const todoData = new UpdateTodoDto(1, 'Test Todo updated');
+		const updateData = new UpdateTodoDto(1, 'Test Todo updated');
 		const error = new Error('Repository update failed');
 
 		repository.update.mockRejectedValue(error);
 
-		await expect(updateTodoUseCase.execute(todoData)).rejects.toThrow(error);
+		await expect(updateTodoUseCase.execute(updateData)).rejects.toThrow(error);
 	});
 });
