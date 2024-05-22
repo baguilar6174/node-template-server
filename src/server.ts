@@ -1,5 +1,6 @@
 // src\server.ts
 
+import { type Server as ServerHttp, type IncomingMessage, type ServerResponse } from 'http';
 import express, { type Router, type Request, type Response, type NextFunction } from 'express';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
@@ -14,7 +15,8 @@ interface ServerOptions {
 }
 
 export class Server {
-	private readonly app = express();
+	public readonly app = express(); // This is public for testing purposes
+	private serverListener?: ServerHttp<typeof IncomingMessage, typeof ServerResponse>;
 	private readonly port: number;
 	private readonly routes: Router;
 	private readonly apiPrefix: string;
@@ -77,8 +79,12 @@ export class Server {
 		// Handle errors middleware
 		this.routes.use(ErrorMiddleware.handleError);
 
-		this.app.listen(this.port, () => {
+		this.serverListener = this.app.listen(this.port, () => {
 			console.log(`Server running on port ${this.port}...`);
 		});
+	}
+
+	close(): void {
+		this.serverListener?.close();
 	}
 }
