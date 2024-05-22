@@ -1,4 +1,3 @@
-import { ValidationError } from '../../../../core';
 import { CreateTodoDto } from '../dtos';
 import { TodoEntity } from '../entities';
 import { TodoRepository } from '../repositories/respository';

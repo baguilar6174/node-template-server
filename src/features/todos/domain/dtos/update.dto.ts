@@ -2,7 +2,7 @@ import { type ValidationType, ValidationError, ZERO } from '../../../../core';
 import { type CoreDto } from '../../../shared';
 
 export class UpdateTodoDto implements CoreDto<UpdateTodoDto> {
-	private constructor(
+	constructor(
 		public readonly id: number,
 		public readonly text?: string,
 		public readonly isCompleted?: boolean
