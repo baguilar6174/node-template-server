@@ -32,6 +32,8 @@ Run `yarn dev`
 
 If your want to create build production, run `yarn build`
 
+If your want to run tests, run `yarn test || yarn test:watch`
+
 ## My process
 
 ### Built with
