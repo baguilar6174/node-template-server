@@ -1,4 +1,4 @@
-import { ValidationError, ZERO, type ValidationType } from '../../../../core';
+import { AppError, ZERO, type ValidationType } from '../../../../core';
 import { type CoreDto } from './core.dto';
 
 export class PaginationDto implements CoreDto<PaginationDto> {
@@ -24,7 +24,7 @@ export class PaginationDto implements CoreDto<PaginationDto> {
 			errors.push({ fields: ['limit'], constraint: 'Limit must be greater than zero' });
 		}
 
-		if (errors.length > ZERO) throw new ValidationError(errors);
+		if (errors.length > ZERO) throw AppError.badRequest('Error validating pagination', errors);
 	}
 
 	public static create(props: Record<string, unknown>): PaginationDto {

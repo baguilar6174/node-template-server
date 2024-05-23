@@ -1,4 +1,4 @@
-import { ValidationError } from '../../../../core';
+import { AppError } from '../../../../core';
 import { TodoEntity } from './todo.entity';
 
 describe('tests in todo.entity.test.ts', () => {
@@ -19,14 +19,14 @@ describe('tests in todo.entity.test.ts', () => {
 	});
 
 	test('should throw validation error', () => {
-		// ? Shrotest to throw ValidationError
-		// expect(() => TodoEntity.fromJson({ id: 1 })).toThrow(ValidationError);
+		// ? Shrotest to throw AppError
+		// expect(() => TodoEntity.fromJson({ id: 1 })).toThrow(AppError);
 
 		expect(() => TodoEntity.fromJson({ id: 1 })).toThrow(
-			new ValidationError([{ constraint: 'text is required', fields: ['text'] }])
+			AppError.badRequest('This entity requires a text', [{ constraint: 'text is required', fields: ['text'] }])
 		);
 		expect(() => TodoEntity.fromJson({ text: 'Hola' })).toThrow(
-			new ValidationError([{ constraint: 'id is required', fields: ['id'] }])
+			AppError.badRequest('This entity requires an id', [{ constraint: 'id is required', fields: ['id'] }])
 		);
 	});
 });

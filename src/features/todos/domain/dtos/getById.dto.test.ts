@@ -1,4 +1,4 @@
-import { ValidationError } from '../../../../core';
+import { AppError } from '../../../../core';
 import { GetTodoByIdDto } from './getById.dto';
 
 describe('tests in getById.dto.ts', () => {
@@ -8,10 +8,10 @@ describe('tests in getById.dto.ts', () => {
 	});
 
 	test('should throw a validation error for an invalid id', () => {
-		expect(() => new GetTodoByIdDto(NaN)).toThrow(ValidationError);
-		expect(() => new GetTodoByIdDto(null as any)).toThrow(ValidationError);
-		expect(() => new GetTodoByIdDto(undefined as any)).toThrow(ValidationError);
-		expect(() => new GetTodoByIdDto('invalid' as any)).toThrow(ValidationError);
+		expect(() => new GetTodoByIdDto(NaN)).toThrow(AppError);
+		expect(() => new GetTodoByIdDto(null as any)).toThrow(AppError);
+		expect(() => new GetTodoByIdDto(undefined as any)).toThrow(AppError);
+		expect(() => new GetTodoByIdDto('invalid' as any)).toThrow(AppError);
 	});
 
 	test('should throw a validation error with correct error message for invalid id', () => {
@@ -21,7 +21,7 @@ describe('tests in getById.dto.ts', () => {
 			// new GetTodoByIdDto(undefined as any);
 			// new GetTodoByIdDto('invalid' as any);
 		} catch (error) {
-			if (error instanceof ValidationError) {
+			if (error instanceof AppError) {
 				expect(error.validationErrors).toEqual([{ fields: ['id'], constraint: 'Id is not a valid number' }]);
 			}
 		}

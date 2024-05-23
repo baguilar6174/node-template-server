@@ -1,4 +1,4 @@
-import { type ValidationType, ValidationError, ZERO } from '../../../../core';
+import { type ValidationType, AppError, ZERO } from '../../../../core';
 import { type CoreDto } from '../../../shared';
 
 export class CreateTodoDto implements CoreDto<CreateTodoDto> {
@@ -13,6 +13,6 @@ export class CreateTodoDto implements CoreDto<CreateTodoDto> {
 			errors.push({ fields: ['text'], constraint: 'Text is required' });
 		}
 
-		if (errors.length > ZERO) throw new ValidationError(errors);
+		if (errors.length > ZERO) throw AppError.badRequest('Error validating create todo', errors);
 	}
 }

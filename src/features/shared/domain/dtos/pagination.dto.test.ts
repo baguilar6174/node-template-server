@@ -1,4 +1,4 @@
-import { ValidationError } from '../../../../core';
+import { AppError } from '../../../../core';
 import { PaginationDto } from './pagination.dto';
 
 describe('tests in pagination.dto.ts', () => {
@@ -9,19 +9,19 @@ describe('tests in pagination.dto.ts', () => {
 	});
 
 	test('should throw a validation error for page or limit invalid', () => {
-		expect(() => PaginationDto.create({ page: NaN, limit: 10 })).toThrow(ValidationError);
-		expect(() => PaginationDto.create({ page: 1, limit: NaN })).toThrow(ValidationError);
-		expect(() => PaginationDto.create({ page: 0, limit: 10 })).toThrow(ValidationError);
-		expect(() => PaginationDto.create({ page: -1, limit: 10 })).toThrow(ValidationError);
-		expect(() => PaginationDto.create({ page: 1, limit: 0 })).toThrow(ValidationError);
-		expect(() => PaginationDto.create({ page: 1, limit: -1 })).toThrow(ValidationError);
+		expect(() => PaginationDto.create({ page: NaN, limit: 10 })).toThrow(AppError);
+		expect(() => PaginationDto.create({ page: 1, limit: NaN })).toThrow(AppError);
+		expect(() => PaginationDto.create({ page: 0, limit: 10 })).toThrow(AppError);
+		expect(() => PaginationDto.create({ page: -1, limit: 10 })).toThrow(AppError);
+		expect(() => PaginationDto.create({ page: 1, limit: 0 })).toThrow(AppError);
+		expect(() => PaginationDto.create({ page: 1, limit: -1 })).toThrow(AppError);
 	});
 
 	test('should throw a validation error with correct error message for NaN values', () => {
 		try {
 			PaginationDto.create({ page: NaN, limit: NaN });
 		} catch (error) {
-			if (error instanceof ValidationError) {
+			if (error instanceof AppError) {
 				expect(error.validationErrors).toEqual([
 					{ fields: ['page', 'limit'], constraint: 'Page and limit must be numbers' }
 				]);
@@ -33,7 +33,7 @@ describe('tests in pagination.dto.ts', () => {
 		try {
 			PaginationDto.create({ page: 0, limit: 10 });
 		} catch (error) {
-			if (error instanceof ValidationError) {
+			if (error instanceof AppError) {
 				expect(error.validationErrors).toEqual([{ fields: ['page'], constraint: 'Page must be greater than zero' }]);
 			}
 		}
@@ -41,7 +41,7 @@ describe('tests in pagination.dto.ts', () => {
 		try {
 			PaginationDto.create({ page: -1, limit: 10 });
 		} catch (error) {
-			if (error instanceof ValidationError) {
+			if (error instanceof AppError) {
 				expect(error.validationErrors).toEqual([{ fields: ['page'], constraint: 'Page must be greater than zero' }]);
 			}
 		}
@@ -51,7 +51,7 @@ describe('tests in pagination.dto.ts', () => {
 		try {
 			PaginationDto.create({ page: 1, limit: 0 });
 		} catch (error) {
-			if (error instanceof ValidationError) {
+			if (error instanceof AppError) {
 				expect(error.validationErrors).toEqual([{ fields: ['limit'], constraint: 'Limit must be greater than zero' }]);
 			}
 		}
@@ -59,7 +59,7 @@ describe('tests in pagination.dto.ts', () => {
 		try {
 			PaginationDto.create({ page: 1, limit: -1 });
 		} catch (error) {
-			if (error instanceof ValidationError) {
+			if (error instanceof AppError) {
 				expect(error.validationErrors).toEqual([{ fields: ['limit'], constraint: 'Limit must be greater than zero' }]);
 			}
 		}

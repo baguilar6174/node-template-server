@@ -1,4 +1,4 @@
-import { type ValidationType, ValidationError, ZERO } from '../../../../core';
+import { type ValidationType, AppError, ZERO } from '../../../../core';
 import { type CoreDto } from '../../../shared';
 
 export class UpdateTodoDto implements CoreDto<UpdateTodoDto> {
@@ -28,7 +28,7 @@ export class UpdateTodoDto implements CoreDto<UpdateTodoDto> {
 			errors.push({ fields: ['isCompleted'], constraint: 'isCompleted must be a valid value (true or false)' });
 		}
 
-		if (errors.length > ZERO) throw new ValidationError(errors);
+		if (errors.length > ZERO) throw AppError.badRequest('Error validating update todo', errors);
 	}
 
 	public static create(props: Record<string, unknown>): UpdateTodoDto {

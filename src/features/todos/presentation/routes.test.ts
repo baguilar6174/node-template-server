@@ -76,7 +76,7 @@ describe('tests in routes', () => {
 			.expect(HttpCode.BAD_REQUEST)
 			.expect('Content-Type', /json/)
 			.then(({ body }: { body: ErrorResponse }) => {
-				expect(body.message).toEqual('Validation Error');
+				expect(body.message).toEqual('Error validating get todo by id');
 				expect(body.validationErrors).toEqual([{ fields: ['id'], constraint: 'Id is not a valid number' }]);
 			});
 	});
@@ -109,7 +109,7 @@ describe('tests in routes', () => {
 			.expect(HttpCode.BAD_REQUEST)
 			.expect('Content-Type', /json/)
 			.then(({ body }: { body: ErrorResponse }) => {
-				expect(body.message).toEqual('Validation Error');
+				expect(body.message).toEqual('Error validating create todo');
 				expect(body.validationErrors).toEqual([{ fields: ['text'], constraint: 'Text is required' }]);
 			});
 	});
@@ -123,7 +123,7 @@ describe('tests in routes', () => {
 			.expect(HttpCode.BAD_REQUEST)
 			.expect('Content-Type', /json/)
 			.then(({ body }: { body: ErrorResponse }) => {
-				expect(body.message).toEqual('Validation Error');
+				expect(body.message).toEqual('Error validating create todo');
 				expect(body.validationErrors).toEqual([{ fields: ['text'], constraint: 'Text is required' }]);
 			});
 	});
