@@ -43,13 +43,12 @@ If your want to run tests, run `yarn test || yarn test:watch`
 - Express
 - ESLint & Prettier
 - Environment Variables
-
-### Improves
-
-- Add alias path
-- Testing
-- Logger
-- Auth
+- Unit testing with Jest & Supertest
+- Clean Architecture
+- Repository Pattern
+- Adapter Pattern
+- Use Cases
+- DTOs (Data Transfer Objects)
 
 ## Project Structure
 
@@ -62,9 +61,13 @@ node-template-server/
 │   ├── core/
 │   │   ├── config/
 │   │   ├── constants/
-│   │   └── errors/
+│   │   ├── errors/
+│   │   └── types/
 │   ├── features/
 │   │   ├── shared/
+│   │   │   ├── domain/
+│   │   │   │   ├── dtos/
+│   │   │   │   ├── entities/
 │   │   │   └── presentation/
 │   │   │       └── middlewares/
 │   │   │
@@ -77,7 +80,7 @@ node-template-server/
 │   │   │   │   └── usecases/
 │   │   │   │
 │   │   │   ├── infrastructure/
-│   │   │   │   ├── datasource.impl.ts
+│   │   │   │   ├── local.datasource.impl.ts
 │   │   │   │   └── repository.impl.ts
 │   │   │   │
 │   │   │   └── presentation/
@@ -87,9 +90,11 @@ node-template-server/
 │   ├── app.test.ts
 │   ├── app.ts
 │   ├── routes.ts
-│   └── server.ts
+│   ├── server.ts
+│   └── testServer.ts
 ├── .env
 ├── .env.template
+├── .env.test
 ├── ...
 ├── package.json
 └── ...
