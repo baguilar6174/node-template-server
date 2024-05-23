@@ -4,9 +4,9 @@
 	"compilerOptions": {
 		"types": ["node", "jest", "express"],
 		"target": "ESNext",
-		"module": "NodeNext",
+		"module": "CommonJS",
 		"rootDir": "./src",
-		"moduleResolution": "NodeNext",
+		"moduleResolution": "Node",
 		"typeRoots": ["./node_modules/@types"],
 		"sourceMap": true,
 		"outDir": "dist/",
