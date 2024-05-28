@@ -7,7 +7,7 @@ describe('tests in local.datasource.impl.ts', () => {
 	const todoDatasource = new TodoDatasourceImpl();
 
 	test('should return a TODOs list', async () => {
-		const paginationDto = new PaginationDto(1, 10);
+		const paginationDto = PaginationDto.create({ page: 1, limit: 10 });
 		const expectedResults = [
 			{ id: 1, text: 'First TODO...', isCompleted: false },
 			{ id: 2, text: 'Second TODO...', isCompleted: false }
@@ -24,14 +24,14 @@ describe('tests in local.datasource.impl.ts', () => {
 	});
 
 	test('should return a TODO by id', async () => {
-		const getByIdDto = new GetTodoByIdDto(1);
+		const getByIdDto = GetTodoByIdDto.create({ id: 1 });
 		const todo = await todoDatasource.getById(getByIdDto);
 		expect(todo).toEqual(TodoEntity.fromJson({ id: 1, text: 'First TODO...', isCompleted: false }));
 	});
 
 	test('should return an error when trying to get a non-existing TODO', async () => {
 		try {
-			const getByIdDto = new GetTodoByIdDto(100);
+			const getByIdDto = GetTodoByIdDto.create({ id: 100 });
 			await todoDatasource.getById(getByIdDto);
 		} catch (error) {
 			if (error instanceof AppError) {
@@ -41,7 +41,7 @@ describe('tests in local.datasource.impl.ts', () => {
 	});
 
 	test('should create a TODO', async () => {
-		const data = new CreateTodoDto('Test Todo');
+		const data = CreateTodoDto.create({ text: 'Test Todo' });
 		const createdTodo: TodoEntity = { id: expect.any(Number), text: 'Test Todo', isCompleted: false };
 
 		const result = await todoDatasource.create(data);
@@ -49,7 +49,7 @@ describe('tests in local.datasource.impl.ts', () => {
 	});
 
 	test('should update a TODO', async () => {
-		const data = new UpdateTodoDto(1, 'Test Todo');
+		const data = UpdateTodoDto.create({ id: 1, text: 'Test Todo' });
 		const updatedTodo: TodoEntity = { id: 1, text: 'Test Todo', isCompleted: false };
 
 		const result = await todoDatasource.update(data);
@@ -57,7 +57,7 @@ describe('tests in local.datasource.impl.ts', () => {
 	});
 
 	test('should delete a TODO', async () => {
-		const getByIdDto = new GetTodoByIdDto(1);
+		const getByIdDto = GetTodoByIdDto.create({ id: 1 });
 		const todo = await todoDatasource.getById(getByIdDto);
 		const deletedTodo = await todoDatasource.delete(getByIdDto);
 		expect(deletedTodo).toEqual(todo);

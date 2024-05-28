@@ -20,7 +20,7 @@ describe('tests in delete.usecase.ts', () => {
 	});
 
 	test('should call repository.delete with correct parameters', async () => {
-		const getByIdDto = new GetTodoByIdDto(1);
+		const getByIdDto = GetTodoByIdDto.create({ id: 1 });
 		const todoEntity = new TodoEntity(getByIdDto.id, 'Test Todo');
 
 		repository.delete.mockResolvedValue(todoEntity);
@@ -32,7 +32,7 @@ describe('tests in delete.usecase.ts', () => {
 	});
 
 	test('should throw an error if repository.delete fails', async () => {
-		const getByIdDto = new GetTodoByIdDto(1);
+		const getByIdDto = GetTodoByIdDto.create({ id: 1 });
 		const errorMessage = 'Delete failed';
 
 		repository.delete.mockRejectedValue(new Error(errorMessage));

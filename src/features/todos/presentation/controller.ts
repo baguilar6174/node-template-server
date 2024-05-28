@@ -24,7 +24,7 @@ interface Params {
 
 interface RequestBody {
 	text: string;
-	completedAt: string;
+	isCompleted: string;
 }
 
 interface RequestQuery {
@@ -42,8 +42,7 @@ export class TodoController {
 		next: NextFunction
 	): void => {
 		const { page = ONE, limit = TEN } = req.query;
-		const paginationDto = new PaginationDto(+page, +limit);
-		// const paginationDto = PaginationDto.create({ ...req.query });
+		const paginationDto = PaginationDto.create({ page: +page, limit: +limit });
 		new GetTodos(this.repository)
 			.execute(paginationDto)
 			.then((result) => res.json({ data: result }))
@@ -53,8 +52,8 @@ export class TodoController {
 	};
 
 	public getById = (req: Request<Params>, res: Response<SuccessResponse<TodoEntity>>, next: NextFunction): void => {
-		const id = +req.params.id;
-		const getTodoByIdDto = new GetTodoByIdDto(id);
+		const { id } = req.params;
+		const getTodoByIdDto = GetTodoByIdDto.create({ id: Number(id) });
 		new GetTodoById(this.repository)
 			.execute(getTodoByIdDto)
 			.then((result) => res.json({ data: result }))
@@ -67,7 +66,7 @@ export class TodoController {
 		next: NextFunction
 	): void => {
 		const { text } = req.body;
-		const createDto = new CreateTodoDto(text);
+		const createDto = CreateTodoDto.create({ text });
 		new CreateTodo(this.repository)
 			.execute(createDto)
 			.then((result) => res.status(HttpCode.CREATED).json({ data: result }))
@@ -79,8 +78,9 @@ export class TodoController {
 		res: Response<SuccessResponse<TodoEntity>>,
 		next: NextFunction
 	): void => {
-		const id = +req.params.id;
-		const updateDto = UpdateTodoDto.create({ ...req.body, id });
+		const { id } = req.params;
+		const { text, isCompleted } = req.body;
+		const updateDto = UpdateTodoDto.create({ id: Number(id), text, isCompleted });
 		new UpdateTodo(this.repository)
 			.execute(updateDto)
 			.then((result) => res.json({ data: result }))
@@ -88,8 +88,8 @@ export class TodoController {
 	};
 
 	public delete = (req: Request<Params>, res: Response<SuccessResponse<TodoEntity>>, next: NextFunction): void => {
-		const id = +req.params.id;
-		const getTodoByIdDto = new GetTodoByIdDto(id);
+		const { id } = req.params;
+		const getTodoByIdDto = GetTodoByIdDto.create({ id: Number(id) });
 		new DeleteTodo(this.repository)
 			.execute(getTodoByIdDto)
 			.then((result) => res.json({ data: result }))

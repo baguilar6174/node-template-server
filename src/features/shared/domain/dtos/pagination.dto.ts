@@ -2,13 +2,18 @@ import { AppError, ZERO, type ValidationType } from '../../../../core';
 import { type CoreDto } from './core.dto';
 
 export class PaginationDto implements CoreDto<PaginationDto> {
-	constructor(
+	private constructor(
 		public readonly page: number,
 		public readonly limit: number
 	) {
 		this.validate(this);
 	}
 
+	/**
+	 * This method validates the properties of the PaginationDto class.
+	 * @param dto The instance of the PaginationDto class to be validated.
+	 * @returns void
+	 */
 	public validate(dto: PaginationDto): void {
 		const errors: ValidationType[] = [];
 
@@ -27,8 +32,14 @@ export class PaginationDto implements CoreDto<PaginationDto> {
 		if (errors.length > ZERO) throw AppError.badRequest('Error validating pagination', errors);
 	}
 
-	public static create(props: Record<string, unknown>): PaginationDto {
-		const { page, limit } = props;
+	/**
+	 * This method creates a new instance of this DTO class with the given
+	 * properties from body or query parameters.
+	 * @param object
+	 * @returns A new instance of this DTO
+	 */
+	public static create(object: Record<string, unknown>): PaginationDto {
+		const { page, limit } = object;
 		return new PaginationDto(page as number, limit as number);
 	}
 }

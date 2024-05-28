@@ -2,7 +2,7 @@ import { type ValidationType, AppError, ZERO } from '../../../../core';
 import { type CoreDto } from '../../../shared';
 
 export class CreateTodoDto implements CoreDto<CreateTodoDto> {
-	constructor(public readonly text: string) {
+	private constructor(public readonly text: string) {
 		this.validate(this);
 	}
 
@@ -14,5 +14,16 @@ export class CreateTodoDto implements CoreDto<CreateTodoDto> {
 		}
 
 		if (errors.length > ZERO) throw AppError.badRequest('Error validating create todo', errors);
+	}
+
+	/**
+	 * This method creates a new instance of this DTO class with the given
+	 * properties from body or query parameters.
+	 * @param object
+	 * @returns A new instance of this DTO
+	 */
+	public static create(object: Record<string, unknown>): CreateTodoDto {
+		const { text } = object;
+		return new CreateTodoDto(text as string);
 	}
 }

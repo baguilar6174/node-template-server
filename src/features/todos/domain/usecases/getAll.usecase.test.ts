@@ -20,7 +20,7 @@ describe('tests in getAll.usecase.ts', () => {
 	});
 
 	test('should call repository.getAll with correct parameters', async () => {
-		const paginationDto = new PaginationDto(1, 10);
+		const paginationDto = PaginationDto.create({ page: 1, limit: 10 });
 
 		const paginationResult = {
 			results: [new TodoEntity(1, 'Test Todo')],
@@ -40,7 +40,7 @@ describe('tests in getAll.usecase.ts', () => {
 	});
 
 	test('should throw an error if repository.getAll fails', async () => {
-		const paginationDto = new PaginationDto(1, 10);
+		const paginationDto = PaginationDto.create({ page: 1, limit: 10 });
 		const errorMessage = 'GetAll failed';
 
 		repository.getAll.mockRejectedValue(new Error(errorMessage));

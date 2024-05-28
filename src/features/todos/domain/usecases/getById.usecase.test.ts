@@ -20,7 +20,7 @@ describe('tests in getById.usecase.ts', () => {
 	});
 
 	test('should get a todo item by id successfully', async () => {
-		const getByIdDto = new GetTodoByIdDto(1);
+		const getByIdDto = GetTodoByIdDto.create({ id: 1 });
 		const todoEntity = new TodoEntity(getByIdDto.id, 'Test Todo');
 
 		repository.getById.mockResolvedValue(todoEntity);
@@ -32,7 +32,7 @@ describe('tests in getById.usecase.ts', () => {
 	});
 
 	test('should throw an error if repository.getById fails', async () => {
-		const getByIdDto = new GetTodoByIdDto(1);
+		const getByIdDto = GetTodoByIdDto.create({ id: 1 });
 		const error = new Error('Repository getById failed');
 
 		repository.getById.mockRejectedValue(error);

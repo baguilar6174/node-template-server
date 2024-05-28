@@ -20,7 +20,7 @@ describe('tests in create.usecase.ts', () => {
 	});
 
 	test('should create a todo item successfully', async () => {
-		const todoData = new CreateTodoDto('Test Todo');
+		const todoData = CreateTodoDto.create({ text: 'Test Todo' });
 		const createdTodo: TodoEntity = { id: 1, text: 'Test Todo', isCompleted: false };
 
 		repository.create.mockResolvedValue(createdTodo);
@@ -32,7 +32,7 @@ describe('tests in create.usecase.ts', () => {
 	});
 
 	test('should throw an error if repository.create fails', async () => {
-		const todoData = new CreateTodoDto('Test Todo');
+		const todoData = CreateTodoDto.create({ text: 'Test Todo' });
 		const error = new Error('Repository create failed');
 
 		repository.create.mockRejectedValue(error);

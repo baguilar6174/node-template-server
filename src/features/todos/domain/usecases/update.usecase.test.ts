@@ -20,7 +20,7 @@ describe('tests in update.usecase.ts', () => {
 	});
 
 	test('should update a todo item successfully', async () => {
-		const updateData = new UpdateTodoDto(1, 'Test Todo updated');
+		const updateData = UpdateTodoDto.create({ id: 1, text: 'Test Todo updated' });
 		const updatedTodo: TodoEntity = { id: 1, text: 'Test Todo updated', isCompleted: false };
 
 		repository.update.mockResolvedValue(updatedTodo);
@@ -32,7 +32,7 @@ describe('tests in update.usecase.ts', () => {
 	});
 
 	test('should throw an error if repository.update fails', async () => {
-		const updateData = new UpdateTodoDto(1, 'Test Todo updated');
+		const updateData = UpdateTodoDto.create({ id: 1, text: 'Test Todo updated' });
 		const error = new Error('Repository update failed');
 
 		repository.update.mockRejectedValue(error);
