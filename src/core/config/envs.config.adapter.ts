@@ -1,4 +1,4 @@
-import { envs } from './envs.config';
+import { envs } from './envs.adapter';
 
 describe('tests in envs.config.test.ts', () => {
 	test('should return env options', () => {
