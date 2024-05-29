@@ -50,6 +50,233 @@ If your want to run tests, run `yarn test || yarn test:watch`
 - Use Cases
 - DTOs (Data Transfer Objects)
 
+## API Documentation
+
+### GET `/api/v1/todos`
+
+Retrieves a paginated list of todos.
+
+#### Query Parameters
+
+- `page` (number, optional): The page number to retrieve. Defaults to `1`.
+- `limit` (number, optional): The number of items per page. Defaults to `10`.
+
+#### Response Codes
+
+Ensure that the values for page and limit are valid positive integers to avoid errors.
+
+- `400 Bad Request`: Returned if query parameters are invalid.
+- `200 OK`: Returned if the request is successful.
+
+#### Response
+
+```json
+{
+	"data": {
+		// (TodoEntity[]): Array of todo items.
+		"results": [
+			{
+				"id": "number",
+				"text": "string",
+				"isCompleted": "boolean"
+			}
+		],
+		"currentPage": "number", // The current page number.
+		"nextPage": "number | null", // The next page number, or null if there is no next page.
+		"prevPage": "number | null", // The previous page number, or null if there is no previous page.
+		"total": "number", // Total number of todos.
+		"totalPages": "number" // Total number of pages.
+	}
+}
+```
+
+### GET `/api/v1/todos/:id`
+
+Retrieves a single todo item by its id.
+
+#### Path Parameters
+
+- `id` (number): The id of the todo item to retrieve.
+
+#### Response Codes
+
+- `404 Not Found`: Returned if the todo item with the specified id does not exist.
+- `200 OK`: Returned if the request is successful.
+
+#### Response
+
+```json
+{
+	"data": {
+		"id": "number",
+		"text": "string",
+		"isCompleted": "boolean"
+	}
+}
+```
+
+### POST `/api/v1/todos`
+
+Creates a new todo item.
+
+#### Request Body
+
+```json
+{
+	"text": "string"
+}
+```
+
+#### Response Codes
+
+- `400 Bad Request`: Returned if the request body is invalid.
+- `201 Created`: Returned if the request is successful.
+
+#### Response
+
+```json
+{
+	"data": {
+		"id": "number",
+		"text": "string",
+		"isCompleted": "boolean"
+	}
+}
+```
+
+### PUT `/api/v1/todos/:id`
+
+Updates a todo item properties by its id.
+
+#### Path Parameters
+
+- `id` (number): The id of the todo item to update.
+
+#### Request Body
+
+```json
+{
+	"text": "string",
+	"isCompleted": "boolean"
+}
+```
+
+#### Response Codes
+
+- `404 Not Found`: Returned if the todo item with the specified id does not exist.
+- `400 Bad Request`: Returned if the request body is invalid.
+- `200 OK`: Returned if the request is successful.
+
+#### Response
+
+```json
+{
+	"data": {
+		"id": "number",
+		"text": "string",
+		"isCompleted": "boolean"
+	}
+}
+```
+
+### DELETE `/api/v1/todos/:id`
+
+Deletes a todo item by its id.
+
+#### Path Parameters
+
+- `id` (number): The id of the todo item to delete.
+
+#### Response Codes
+
+- `404 Not Found`: Returned if the todo item with the specified id does not exist.
+- `200 OK`: Returned if the request is successful.
+
+#### Response
+
+```json
+{
+	"data": {
+		"id": "number",
+		"text": "string",
+		"isCompleted": "boolean"
+	}
+}
+```
+
+---
+
+### POST `/api/v1/auth/login`
+
+Logs in a user.
+
+#### Request Body
+
+```json
+{
+	"email": "string",
+	"password": "string"
+}
+```
+
+#### Response Codes
+
+- `400 Bad Request`: Returned if the request body is invalid.
+- `200 OK`: Returned if the request is successful.
+
+#### Response
+
+```json
+{
+	"data": {
+		"user": {
+			"id": "string",
+			"name": "string",
+			"email": "string",
+			"emailVerified": "boolean",
+			"role": "string[]"
+		},
+		"token": "string"
+	}
+}
+```
+
+### POST `/api/v1/auth/register`
+
+Registers a new user.
+
+#### Request Body
+
+```json
+{
+	"name": "string",
+	"email": "string",
+	"password": "string"
+}
+```
+
+#### Response Codes
+
+- `400 Bad Request`: Returned if the request body is invalid.
+- `201 Created`: Returned if the request is successful.
+
+#### Response
+
+```json
+{
+	"data": {
+		"user": {
+			"id": "string",
+			"name": "string",
+			"email": "string",
+			"emailVerified": "boolean",
+			"role": "string[]"
+		},
+		"token": "string"
+	}
+}
+```
+
 ## Project Structure
 
 ```bash
@@ -64,6 +291,22 @@ node-template-server/
 │   │   ├── errors/
 │   │   └── types/
 │   ├── features/
+│   │   ├── auth/
+│   │   │   ├── domain/
+│   │   │   │   ├── datasources/
+│   │   │   │   ├── dtos/
+│   │   │   │   ├── entities/
+│   │   │   │   ├── repositories/
+│   │   │   │   └── usecases/
+│   │   │   │
+│   │   │   ├── infrastructure/
+│   │   │   │   ├── local.datasource.impl.ts
+│   │   │   │   └── repository.impl.ts
+│   │   │   │
+│   │   │   └── presentation/
+│   │   │       ├── controller.ts
+│   │   │       └── routes.ts
+│   │   │
 │   │   ├── shared/
 │   │   │   ├── domain/
 │   │   │   │   ├── dtos/
