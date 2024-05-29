@@ -1,6 +1,6 @@
 // src/features/auth/infraestructure/local.datasource.impl.ts
 
-import { AppError, ONE, basicEncript } from '../../../core';
+import { AppError, ONE, basicEncript, basicJWT } from '../../../core';
 import { type RegisterUserDto, type AuthDatasource, UserEntity, AuthEntity, type LoginUserDto } from '../domain';
 
 const USERS_MOCK: UserEntity[] = [
@@ -42,7 +42,9 @@ export class AuthDatasourceImpl implements AuthDatasource {
 		USERS_MOCK.push(createdUser);
 		// Create the auth entity (omit the password)
 		const { password, ...rest } = UserEntity.fromJson(createdUser);
-		return new AuthEntity(rest, 'token');
+		const token = basicJWT.generateToken({ id: createdUser.id });
+		// ? Here you can verify if the token is created correctly before to send it to the client
+		return new AuthEntity(rest, token);
 	}
 
 	public async login(dto: LoginUserDto): Promise<AuthEntity> {
@@ -51,6 +53,8 @@ export class AuthDatasourceImpl implements AuthDatasource {
 		const isPasswordMatch = basicEncript.comparePassword(dto.password, user.password);
 		if (!isPasswordMatch) throw AppError.badRequest('Invalid password');
 		const { password, ...rest } = UserEntity.fromJson({ ...user });
-		return new AuthEntity(rest, 'token');
+		const token = basicJWT.generateToken({ id: user.id });
+		// ? Here you can verify if the token is created correctly before to send it to the client
+		return new AuthEntity(rest, token);
 	}
 }

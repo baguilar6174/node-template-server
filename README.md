@@ -73,7 +73,6 @@ Ensure that the values for page and limit are valid positive integers to avoid e
 ```json
 {
 	"data": {
-		// (TodoEntity[]): Array of todo items.
 		"results": [
 			{
 				"id": "number",
@@ -81,11 +80,11 @@ Ensure that the values for page and limit are valid positive integers to avoid e
 				"isCompleted": "boolean"
 			}
 		],
-		"currentPage": "number", // The current page number.
-		"nextPage": "number | null", // The next page number, or null if there is no next page.
-		"prevPage": "number | null", // The previous page number, or null if there is no previous page.
-		"total": "number", // Total number of todos.
-		"totalPages": "number" // Total number of pages.
+		"currentPage": "number",
+		"nextPage": "number | null",
+		"prevPage": "number | null",
+		"total": "number",
+		"totalPages": "number"
 	}
 }
 ```
