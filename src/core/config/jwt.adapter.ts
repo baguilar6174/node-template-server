@@ -40,7 +40,7 @@ export const basicJWT = {
 	 * @param {string} token - The JWT token to verify.
 	 * @returns {Record<string, any> | null} The decoded payload if the token is valid, otherwise null.
 	 */
-	validateToken: (token: string): Record<string, unknown> | null => {
+	validateToken: <T>(token: string): T | null => {
 		const [headerEncoded, payloadEncoded, signature] = token.split('.');
 
 		const signatureCheck = crypto

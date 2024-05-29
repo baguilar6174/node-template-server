@@ -5,17 +5,22 @@ import {
 	type AuthRepository,
 	type AuthEntity,
 	type AuthDatasource,
-	type LoginUserDto
+	type LoginUserDto,
+	type UserEntity
 } from '../domain';
 
 export class AuthRepositoryImpl implements AuthRepository {
 	constructor(private readonly datasource: AuthDatasource) {}
 
-	async register(dto: RegisterUserDto): Promise<AuthEntity> {
+	public async register(dto: RegisterUserDto): Promise<AuthEntity> {
 		return await this.datasource.register(dto);
 	}
 
-	async login(dto: LoginUserDto): Promise<AuthEntity> {
+	public async login(dto: LoginUserDto): Promise<AuthEntity> {
 		return await this.datasource.login(dto);
+	}
+
+	public async getUserById(dto: string): Promise<UserEntity> {
+		return await this.datasource.getUserById(dto);
 	}
 }

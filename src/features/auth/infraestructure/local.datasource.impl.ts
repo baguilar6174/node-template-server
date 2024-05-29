@@ -57,4 +57,10 @@ export class AuthDatasourceImpl implements AuthDatasource {
 		// ? Here you can verify if the token is created correctly before to send it to the client
 		return new AuthEntity(rest, token);
 	}
+
+	public async getUserById(dto: string): Promise<UserEntity> {
+		const user = USERS_MOCK.find((user) => user.id === dto);
+		if (!user) throw AppError.badRequest('User with this id not found');
+		return UserEntity.fromJson({ ...user });
+	}
 }
