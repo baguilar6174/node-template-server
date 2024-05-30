@@ -3,24 +3,23 @@
 import { AppError, ONE, basicEncript, basicJWT } from '../../../core';
 import { type RegisterUserDto, type AuthDatasource, UserEntity, AuthEntity, type LoginUserDto } from '../domain';
 
-const USERS_MOCK: UserEntity[] = [
+const USERS_MOCK = [
 	{
 		id: '1',
 		name: 'Test User',
 		email: 'test@test.com',
-		emailVerified: true,
-		password: '123456',
-		role: ['admin'],
+		emailVerified: false,
+		password: 'ca0711461f3b8387d01cc0c0cf532a4fb4b5fdf0207f7902fa75580718da497a',
+		role: ['USER_ROLE'],
 		avatar: 'https://avatars.dicebear.com/api/initials/T.svg'
 	},
 	{
 		id: '2',
 		name: 'Test User 2',
 		email: 'test2@test.com',
-		emailVerified: true,
-		password: '123456',
-		role: ['admin'],
-		avatar: 'https://avatars.dicebear.com/api/initials/T.svg'
+		emailVerified: false,
+		password: 'ca0711461f3b8387d01cc0c0cf532a4fb4b5fdf0207f7902fa75580718da497a',
+		role: ['USER_ROLE']
 	}
 ];
 

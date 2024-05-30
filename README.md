@@ -52,6 +52,85 @@ If your want to run tests, run `yarn test || yarn test:watch`
 
 ## API Documentation
 
+This entire implementation is based on an in-memory database for example purposes. **NO** real database is being used, when the server is re-run, the in-memory database **will be re-created**.
+
+Also, simple implementations have been created to **encrypt** and **validate authentication tokens** (no third party dependencies are used for this). If you use this repository as an example, it is recommended that you modify these implementations using libraries or your own implementations (`src/core/config` folder).
+
+### Authentication
+
+### POST `/api/v1/auth/register`
+
+Registers a new user in memory database.
+
+#### Request Body
+
+```json
+{
+	"name": "string",
+	"email": "string",
+	"password": "string"
+}
+```
+
+#### Response Codes
+
+- `400 Bad Request`: Returned if the request body is invalid.
+- `201 Created`: Returned if the request is successful.
+
+#### Response
+
+```json
+{
+	"data": {
+		"user": {
+			"id": "string",
+			"name": "string",
+			"email": "string",
+			"emailVerified": "boolean",
+			"role": "string[]"
+		},
+		"token": "string"
+	}
+}
+```
+
+### POST `/api/v1/auth/login`
+
+Logs in a user.
+
+#### Request Body
+
+```json
+{
+	"email": "string",
+	"password": "string"
+}
+```
+
+#### Response Codes
+
+- `400 Bad Request`: Returned if the request body is invalid.
+- `200 OK`: Returned if the request is successful.
+
+#### Response
+
+```json
+{
+	"data": {
+		"user": {
+			"id": "string",
+			"name": "string",
+			"email": "string",
+			"emailVerified": "boolean",
+			"role": "string[]"
+		},
+		"token": "string"
+	}
+}
+```
+
+---
+
 ### GET `/api/v1/todos`
 
 Retrieves a paginated list of todos.
@@ -116,7 +195,11 @@ Retrieves a single todo item by its id.
 
 ### POST `/api/v1/todos`
 
-Creates a new todo item.
+Creates a new todo item. You need to be `logged in` previously. This endpoint requires authorization because it is protected with AuthMiddleware.
+
+#### Authorization
+
+Bearer `<token>`
 
 #### Request Body
 
@@ -128,6 +211,7 @@ Creates a new todo item.
 
 #### Response Codes
 
+- `401 Unauthorized`: Returned if the request is not authorized.
 - `400 Bad Request`: Returned if the request body is invalid.
 - `201 Created`: Returned if the request is successful.
 
@@ -204,77 +288,6 @@ Deletes a todo item by its id.
 ```
 
 ---
-
-### POST `/api/v1/auth/login`
-
-Logs in a user.
-
-#### Request Body
-
-```json
-{
-	"email": "string",
-	"password": "string"
-}
-```
-
-#### Response Codes
-
-- `400 Bad Request`: Returned if the request body is invalid.
-- `200 OK`: Returned if the request is successful.
-
-#### Response
-
-```json
-{
-	"data": {
-		"user": {
-			"id": "string",
-			"name": "string",
-			"email": "string",
-			"emailVerified": "boolean",
-			"role": "string[]"
-		},
-		"token": "string"
-	}
-}
-```
-
-### POST `/api/v1/auth/register`
-
-Registers a new user.
-
-#### Request Body
-
-```json
-{
-	"name": "string",
-	"email": "string",
-	"password": "string"
-}
-```
-
-#### Response Codes
-
-- `400 Bad Request`: Returned if the request body is invalid.
-- `201 Created`: Returned if the request is successful.
-
-#### Response
-
-```json
-{
-	"data": {
-		"user": {
-			"id": "string",
-			"name": "string",
-			"email": "string",
-			"emailVerified": "boolean",
-			"role": "string[]"
-		},
-		"token": "string"
-	}
-}
-```
 
 ## Project Structure
 
