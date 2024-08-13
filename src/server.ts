@@ -56,8 +56,10 @@ export class Server {
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				res.setHeader('Access-Control-Allow-Origin', origin!);
 			}
-			res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-			res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+			// Do not forget to add all the necessary methods and headers to avoid CORS problems
+			res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+			// For example, if you are going to use authorization headers do not forget to add it here
+			res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
 			next();
 		});
 
