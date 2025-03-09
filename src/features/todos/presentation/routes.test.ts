@@ -1,16 +1,45 @@
 // use supertest to test routes
 import request from 'supertest';
+import { Application } from 'express';
 
 import { testServer } from '../../../testServer';
 import { ErrorResponse, HttpCode, SuccessResponse, envs } from '../../../core';
 import { PaginationResponseEntity } from '../../shared';
 import { TodoEntity } from '../domain';
 
+/**
+ * Registers a test user and returns their authentication token
+ * @param app Express application instance
+ * @param userData Optional custom user data
+ * @returns Authentication token
+ */
+export async function registerTestUser(app: Application) {
+	const defaultUserData = {
+		name: 'Test User',
+		email: `test@example.com`,
+		password: 'Password123!'
+	};
+
+	// Register the user
+	const registerResponse = await request(app)
+		.post(`${envs.API_PREFIX}/auth/register`)
+		.send(defaultUserData)
+		.expect(HttpCode.CREATED);
+
+	const { data } = registerResponse.body;
+	const { token } = data;
+
+	return token;
+}
+
 describe('tests in routes', () => {
 	const url = `${envs.API_PREFIX}/todos`;
+	let authToken: string;
 
 	beforeAll(async () => {
 		await testServer.start();
+		const token = await registerTestUser(testServer.app);
+		authToken = token;
 	});
 
 	afterAll(() => {
@@ -92,6 +121,7 @@ describe('tests in routes', () => {
 
 		await request(testServer.app)
 			.post(url)
+			.set('Authorization', `Bearer ${authToken}`)
 			.send(expectedResponse.data)
 			.expect(HttpCode.CREATED)
 			.expect('Content-Type', /json/)
@@ -105,6 +135,7 @@ describe('tests in routes', () => {
 
 		await request(testServer.app)
 			.post(url)
+			.set('Authorization', `Bearer ${authToken}`)
 			.send(data)
 			.expect(HttpCode.BAD_REQUEST)
 			.expect('Content-Type', /json/)
@@ -119,6 +150,7 @@ describe('tests in routes', () => {
 
 		await request(testServer.app)
 			.post(url)
+			.set('Authorization', `Bearer ${authToken}`)
 			.send(data)
 			.expect(HttpCode.BAD_REQUEST)
 			.expect('Content-Type', /json/)

@@ -11,7 +11,7 @@ const JWT_SEED = envs.JWT_SEED;
 export const basicJWT = {
 	/**
 	 * Creates a JWT token.
-	 * @param {Record<string, any>} payload - The payload of the token.
+	 * @param {Record<string, unknown>} payload - The payload of the token.
 	 * @param {number} expiresIn - The token expiration time in seconds.
 	 * @returns {string} The generated JWT token.
 	 */
@@ -66,7 +66,13 @@ export const basicJWT = {
  * @returns {string} The Base64 URL-safe encoded string.
  */
 function base64UrlEncode(data: string | Buffer): string {
-	return Buffer.from(data).toString('base64').replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+	if (typeof data === 'string') {
+		return Buffer.from(data, 'utf8').toString('base64').replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+	} else if (Buffer.isBuffer(data)) {
+		return data.toString('base64').replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+	} else {
+		throw new Error('Unsupported data type for base64UrlEncode');
+	}
 }
 
 /**
