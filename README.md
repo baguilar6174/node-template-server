@@ -22,7 +22,7 @@ Install dependencies
 yarn
 ```
 
-Clone `.env.template` file and rename to `.env`.
+Clone `.env.template` file and rename to `.env`. To test the project, you can use the `.env.test` file.
 
 Replace your environment variables in `.env` file
 
@@ -32,7 +32,9 @@ Run `yarn dev`
 
 If your want to create build production, run `yarn build`
 
-If your want to run tests, run `yarn test || yarn test:watch`
+If your want to run tests, run `yarn test` or `yarn test:watch`
+
+If you want to know outdated dependencies, run `yarn outdated`
 
 ## My process
 
